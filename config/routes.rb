@@ -3,18 +3,28 @@ Rails.application.routes.draw do
 
   root to: 'tasks#index' # always the first one
 
-  ## READ
+  # READ
 
   get 'tasks', to: 'tasks#index'
 
-    # get    "restaurants/new",      to: "restaurants#new"
-    # post   "restaurants",          to: "restaurants#create"
+  # CREATE
 
-    # # NB: The `show` route needs to be *after* `new` route.
-    # get    "restaurants/:id",      to: "restaurants#show"
+  get    "tasks/new",      to: "tasks#new",   as: 'new_task'
+  post   "tasks",          to: "tasks#create"
 
-    # get    "restaurants/:id/edit", to: "restaurants#edit"
-    # patch  "restaurants/:id",      to: "restaurants#update"
+  # NB: The `show` route needs to be *after* `new` route.
 
-    # delete "restaurants/:id",      to: "restaurants#destroy"
+  # READ BIS
+
+  get    "tasks/:id",      to: "tasks#show",  as: 'task'
+
+  # UPDATE
+
+  get    "tasks/:id/edit", to: "tasks#edit", as: 'edit_task'
+
+  patch  "tasks/:id",      to: "tasks#update"
+
+  # DELETE
+
+  delete "tasks/:id",      to: "tasks#destroy"
 end

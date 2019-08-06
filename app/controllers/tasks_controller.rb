@@ -1,14 +1,16 @@
 class TasksController < ApplicationController
+  before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
     @tasks = Task.all
   end
 
   def show
+    @task = Task.find(params[:id])
   end
 
   def new
-    @tast = Task.new
+    @task = Task.new
   end
 
   def create
@@ -18,29 +20,19 @@ class TasksController < ApplicationController
     redirect_to task_path(task)
   end
 
-  # def edit
-  #   # params
-  #   # => { id: '1' }
+  def edit
+    @task = Task.find(params[:id])
+  end
 
-  #   # @restaurant = Restaurant.find(params[:id])
-  # end
+  def update
+    @task.update(task_params)
+    redirect_to task_path(@task)
+  end
 
-  # def update
-  #   # {"utf8"=>"✓", "_method"=>"patch", "authenticity_token"=>"gj9Sc...==",
-  #   #  "restaurant"=>{"name"=>"Les bouteilles", "address"=>"Talensac, Nantes", "stars"=>"3"},
-  #   #  "commit"=>"Update Restaurant",
-  #   #  "id"=>"1"}
-
-  #   # @restaurant = Restaurant.find(params[:id])
-  #   @restaurant.update(restaurant_params)
-  #   redirect_to restaurant_path(@restaurant)
-  # end
-
-  # def destroy
-  #   # @restaurant = Restaurant.find(params[:id])
-  #   @restaurant.destroy
-  #   redirect_to restaurants_path
-  # end
+  def destroy
+    @task.destroy
+    redirect_to tasks_path
+  end
 
   private
 
@@ -48,7 +40,7 @@ class TasksController < ApplicationController
     params.require(:task).permit(:title, :details, :completed)
   end
 
-  # def set_restaurant
-  #   @restaurant = Restaurant.find(params[:id])
-  # end
+  def set_task
+    @task = Task.find(params[:id])
+  end
 end
